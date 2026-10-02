@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proof of Operation - ActivoBank</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f5f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .document-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 800px;
+            padding: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        /* Top Action Bar */
+        .action-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .copy-btn {
+            background-color: #00a9e0;
+            color: #ffffff;
+            border: none;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .copy-btn:hover {
+            background-color: #008cc2;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Header Logo */
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 30px;
+        }
+
+        .logo-text {
+            text-align: right;
+        }
+
+        .logo-text h1 {
+            color: #00a9e0;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        .logo-text span {
+            color: #000000;
+            font-size: 12px;
+            font-weight: 600;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* Content Section */
+        .title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 11px;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .section-title {
+            color: #00a9e0;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            padding-bottom: 4px;
+        }
+
+        /* Table Design */
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .details-table tr {
+            border-bottom: 1px solid #eef0f2;
+        }
+
+        .details-table td {
+            padding: 10px 0;
+            font-size: 11px;
+        }
+
+        .details-table td.label {
+            font-weight: 700;
+            color: #333;
+            width: 30%;
+        }
+
+        .details-table td.value {
+            text-align: right;
+            color: #444;
+            font-family: monospace, sans-serif;
+            font-size: 11px;
+        }
+
+        /* Disclaimers */
+        .disclaimer {
+            font-size: 10px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 40px;
+        }
+
+        .disclaimer p {
+            margin-bottom: 8px;
+        }
+
+        /* Footer Section */
+        .footer {
+            border-top: 1px solid #eef0f2;
+            padding-top: 15px;
+            font-size: 9px;
+            color: #777;
+            line-height: 1.4;
+        }
+
+        .footer-dynamic-time {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .page-number {
+            text-align: right;
+            font-size: 10px;
+            color: #888;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #2e7d32;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 13px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="document-container" id="documentContent">
+        <!-- Action Button -->
+        <div class="action-bar">
+            <button class="copy-btn" onclick="copyAllDetails()">
+                📋 Copy All Details
+            </button>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-text">
+                <h1>ActivoBank</h1>
+                <span>simplifica</span>
+            </div>
+        </div>
+
+        <!-- Document Title -->
+        <div class="title">Proof of Operation</div>
+        <div class="description">
+            The request of operation with the characteristics identified below is registered in our system.
+        </div>
+
+        <!-- Account Details -->
+        <div class="section-title">ACCOUNT DETAILS</div>
+        <table class="details-table">
+            <tr>
+                <td class="label">NIB</td>
+                <td class="value" id="val-nib">002300004584727523594</td>
+            </tr>
+            <tr>
+                <td class="label">IBAN</td>
+                <td class="value" id="val-iban">PT50002300004584727523594</td>
+            </tr>
+            <tr>
+                <td class="label">SWIFT</td>
+                <td class="value" id="val-swift">ACTVPTPL</td>
+            </tr>
+            <tr>
+                <td class="label">Account Holder</td>
+                <td class="value" id="val-holder">KAREEMELDIN SAMIR ELSAYED EISSA MOSTAFA</td>
+            </tr>
+        </table>
+
+        <!-- Disclaimers -->
+        <div class="disclaimer">
+            <p>If the payment is scheduled then it is subject to the validation of the details given and to the availability of funds in the current account at the time the order is to be executed by the Bank.</p>
+            <p>This document is merely informative and cannot be used for accounting or fiscal purposes.</p>
+        </div>
+
+        <!-- Footer with Dynamic Date & Time -->
+        <div class="footer">
+            <p>
+                Documento obtido por internet impresso em 
+                <span id="dynamicDateTime" class="footer-dynamic-time">Loading date and time...</span> 
+                hora de Portugal Continental.
+            </p>
+            <p>Banco ActivoBank, S.A. - Sede: Rua Augusta, 84 - 1100-053 Lisboa com o Capital Social 127.600.000 Euros - Matriculada na Cons. do Reg. Com. de Lisboa.</p>
+            <p>Nº 1.818 Nº Contribuinte 500 734 305</p>
+        </div>
+
+        <div class="page-number">Page 1 of 1</div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">All details copied successfully!</div>
+
+    <script>
+        // 1. Dynamic Date & Time Generator (Format: DD-MM-YYYY HH:MM:SS)
+        function updateDateTime() {
+            const now = new Date();
+
+            // Formatting day, month, year, hours, minutes, seconds with leading zeros
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            const formattedDateTime = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+            
+            document.getElementById('dynamicDateTime').textContent = formattedDateTime;
+        }
+
+        // Run immediately and update every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // 2. Copy All Details Function
+        function copyAllDetails() {
+            const nib = document.getElementById('val-nib').innerText;
+            const iban = document.getElementById('val-iban').innerText;
+            const swift = document.getElementById('val-swift').innerText;
+            const holder = document.getElementById('val-holder').innerText;
+            const dateTime = document.getElementById('dynamicDateTime').innerText;
+
+            const fullText = `Proof of Operation - ActivoBank\n` +
+                             `-----------------------------------\n` +
+                             `NIB: ${nib}\n` +
+                             `IBAN: ${iban}\n` +
+                             `SWIFT: ${swift}\n` +
+                             `Account Holder: ${holder}\n` +
+                             `-----------------------------------\n` +
+                             `Printed Date & Time: ${dateTime} (Portugal Continental time)`;
+
+            // Using Clipboard API
+            navigator.clipboard.writeText(fullText).then(() => {
+                showToast();
+            }).catch(err => {
+                console.error('Error copying text: ', err);
+            });
+        }
+
+        // 3. Show Toast Function
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
